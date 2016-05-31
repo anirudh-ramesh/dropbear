@@ -1,0 +1,32 @@
+On Ubuntu:
+1. Clone this repository:
+	git clone git@git.tonboimaging.com:ramesh.anirudh95/dropbear.git
+2. Configure build environment for Arago Linux:
+	./configure --host=arm-arago-linux-gnueabi --disable-option-checking --disable-FEATURE --disable-largefile --disable-zlib --disable-syslog --disable-shadow --disable-lastlog --disable-utmp --disable-utmpx --disable-wtmp --disable-wtmpx --disable-loginfunc --disable-pututline --disable-pututxline
+3. Generate binaries
+	make all scp
+4. Copy the following files to the DM-365:
+	dropbear
+	dropbearkey
+	scp
+	dbclient
+
+On Arago:
+1. Copy the following files to "/usr/bin/":
+	dropbear
+	dropbearkey
+	scp
+	dbclient
+2. Generate SSH keys:
+	dropbearkey -t dss -f /etc/dropbear/dropbear_dss_host_key
+	dropbearkey -t rsa -f /etc/dropbear/dropbear_rsa_host_key
+3. Spawn dropbear:
+	dropbear &
+
+On Ubuntu:
+1. Transfer a file:
+	scp filename.extension root@192.168.1.1:/home/root/
+
+Tip:-
+Find out Ubuntu's IP address (Use the appropriate interface identifier):
+	ipa=`ifconfig wlan0 | grep "inet addr:" | awk '{print substr($2, 6, length($2))}'`
